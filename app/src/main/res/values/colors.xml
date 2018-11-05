@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#67a5e0</color>
+    <color name="colorPrimaryDark">#67a5e0</color>
+    <color name="colorAccent">#3c40ba</color>
+    <color name="No_account">#3c40ba</color>
+    <color name="button">#f0f0f0</color>
+</resources>
