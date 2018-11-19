@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Power List</string>
+    <string name="add_new">Add New Task</string>
+    <string name="today_task">Today\'s Tasks</string>
 </resources>

@@ -1,10 +1,16 @@
 package com.champlain.androiddev.a1631152.powerlist;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.champlain.androiddev.a1631152.powerlist.Models.User;
+
+import com.champlain.androiddev.a1631152.powerlist.DB.DBSQLiteManager;
 public class Create_Account extends AppCompatActivity {
 
     @Override
@@ -12,24 +18,53 @@ public class Create_Account extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create__account);
 
-        //OnClick will clear text in Email TextView
-        EditText name = findViewById(R.id.name);
-        name.setOnClickListener(new View.OnClickListener() {
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar!= null)
+        {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        Button bAdd = findViewById(R.id.create_account);
+
+        bAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 EditText name = findViewById(R.id.name);
-                name.getText().clear();
+                EditText email = findViewById(R.id.username);
+                EditText password = findViewById(R.id.password);
+                EditText pass_confirm = findViewById(R.id.password);
+
+                if(password.getText().toString().equals(pass_confirm.getText().toString()))
+                {
+                    User u = new User(1, email.getText().toString(), password.getText().toString(), name.getText().toString());
+                    addUser(u);
+                    finish();
+
+                }
+                else
+                {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Passwords don't match!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+
+
+
             }
         });
 
-        //OnClick will clear text in Email TextView
-        EditText user = findViewById(R.id.username);
-        user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText user = findViewById(R.id.username);
-                user.getText().clear();
-            }
-        });
+
+    }
+
+    private User addUser(User c)
+    {
+        //Contact createdContact = DBManager.addContact(c);
+
+        DBSQLiteManager dbslm = new DBSQLiteManager(this);
+        User createdUser = dbslm.addUser(c);
+        Toast toast = Toast.makeText(getApplicationContext(), "New User Created", Toast.LENGTH_SHORT);
+        toast.show();
+
+        return createdUser;
     }
 }

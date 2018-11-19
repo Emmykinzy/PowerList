@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Create_Account" />
-        <activity android:name=".Calendar"></activity>
+        <activity android:name=".Calendar" />
+        <activity android:name=".Tasks"></activity>
     </application>
 
 </manifest>
