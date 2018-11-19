@@ -20,19 +20,19 @@ public class User {
 
     public User() {}
 
-    public User( Integer id, String email, String password, String name){
+    public User(Integer id, String email, String password, String name){
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
     }
 
-    public Integer getId()
+    public int getId()
     {
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(int id)
     {
         this.id = id;
     }

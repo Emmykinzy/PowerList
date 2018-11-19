@@ -6,13 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.champlain.androiddev.a1631152.powerlist.Models.User;
-import com.champlain.androiddev.a1631152.powerlist.Models.Tasks;
+import com.champlain.androiddev.a1631152.powerlist.Models.Task;
 
 
 import java.util.ArrayList;
 
 public class DBSQLiteManager extends SQLiteOpenHelper{
     private static ArrayList<User> user_list = new ArrayList<>();
+    private static ArrayList<Task> task_list = new ArrayList<>();
 
     private static final int DATABASE_VERSION = 1;
 
@@ -35,6 +36,30 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
         db.close();
         user_list.add(u);
         return u;
+    }
+
+    public Task addTask(Task t)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Task.COLUMN_UID, t.getUser_id());
+        values.put(Task.COLUMN_DID, t.getData_id());
+        values.put(Task.COLUMN_TASK1, t.getTask1());
+        values.put(Task.COLUMN_DESCRIPTION1, t.getDescription1());
+        values.put(Task.COLUMN_TASK2, t.getTask2());
+        values.put(Task.COLUMN_DESCRIPTION2, t.getDescription2());
+        values.put(Task.COLUMN_TASK3, t.getTask3());
+        values.put(Task.COLUMN_DESCRIPTION3, t.getDescription3());
+        values.put(Task.COLUMN_TASK4, t.getTask4());
+        values.put(Task.COLUMN_DESCRIPTION4, t.getDescription4());
+        values.put(Task.COLUMN_TASK5, t.getTask5());
+        values.put(Task.COLUMN_DESCRIPTION5, t.getDescription5());
+
+        db.insert(Task.TABLE_NAME, null, values);
+        db.close();
+        task_list.add(t);
+        return t;
     }
 
     public void getUsers()
@@ -66,7 +91,9 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL(Tasks.CREATE_TABLE);
+       String a = Task.CREATE_TABLE;
+
+        db.execSQL(Task.CREATE_TABLE);
         db.execSQL(User.CREATE_TABLE);
     }
 

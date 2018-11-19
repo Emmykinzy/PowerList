@@ -46,7 +46,7 @@ public class Login extends Create_Account {
                    {
                        Intent i = new Intent(getBaseContext(), Calendar.class);
                        i.putExtra("user_id", u.getId());
-                       startActivityForResult(i, 1);
+                       startActivity(i);
                        realUser = true;
                    }
                }

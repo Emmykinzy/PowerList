@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Tasks">
+    tools:context=".addTask">
 
     <TextView
         android:id="@+id/textView7"
@@ -20,7 +20,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="60dp"
         android:layout_weight="0"
         android:layout_marginBottom="15dp"
         android:orientation="horizontal">
@@ -28,11 +28,11 @@
         <CheckBox
             android:id="@+id/Check1"
             android:layout_width="55dp"
-            android:layout_height="69dp"
+            android:layout_height="60dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="20dp"
-            android:scaleX="1.75"
-            android:scaleY="1.75"/>
+            android:scaleX="1.50"
+            android:scaleY="1.50"/>
 
         <EditText
             android:id="@+id/Task1"
@@ -40,12 +40,12 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="@string/add_new"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="60dp"
         android:layout_weight="0"
         android:layout_marginBottom="15dp"
         android:orientation="horizontal">
@@ -53,11 +53,11 @@
         <CheckBox
             android:id="@+id/Check2"
             android:layout_width="55dp"
-            android:layout_height="69dp"
+            android:layout_height="60dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="20dp"
-            android:scaleX="1.75"
-            android:scaleY="1.75"
+            android:scaleX="1.50"
+            android:scaleY="1.50"
             android:textSize="40sp" />
 
         <EditText
@@ -71,7 +71,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="60dp"
         android:layout_weight="0"
         android:layout_marginBottom="15dp"
         android:orientation="horizontal">
@@ -79,11 +79,11 @@
         <CheckBox
             android:id="@+id/Check3"
             android:layout_width="55dp"
-            android:layout_height="69dp"
+            android:layout_height="60dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="20dp"
-            android:scaleX="1.75"
-            android:scaleY="1.75"/>
+            android:scaleX="1.50"
+            android:scaleY="1.50"/>
 
         <EditText
             android:id="@+id/Task3"
@@ -96,7 +96,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="60dp"
         android:layout_weight="0"
         android:layout_marginBottom="15dp"
         android:orientation="horizontal">
@@ -104,11 +104,11 @@
         <CheckBox
             android:id="@+id/Check4"
             android:layout_width="55dp"
-            android:layout_height="69dp"
+            android:layout_height="60dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="20dp"
-            android:scaleX="1.75"
-            android:scaleY="1.75"/>
+            android:scaleX="1.50"
+            android:scaleY="1.50"/>
 
         <EditText
             android:id="@+id/Task4"
@@ -121,7 +121,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="60dp"
         android:layout_weight="0"
         android:layout_marginBottom="15dp"
         android:orientation="horizontal">
@@ -129,11 +129,11 @@
         <CheckBox
             android:id="@+id/Check5"
             android:layout_width="55dp"
-            android:layout_height="69dp"
+            android:layout_height="60dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="20dp"
-            android:scaleX="1.75"
-            android:scaleY="1.75"
+            android:scaleX="1.50"
+            android:scaleY="1.50"
             android:textSize="40sp" />
 
         <EditText
@@ -146,10 +146,25 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
 
-    </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel" />
+    </LinearLayout>
 
 </LinearLayout>
