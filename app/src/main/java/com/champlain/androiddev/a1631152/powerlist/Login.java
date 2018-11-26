@@ -20,9 +20,21 @@ public class Login extends Create_Account {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Button test = findViewById(R.id.log_facebook);
 
+        test.setOnClickListener(new View.OnClickListener()
+          {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent i = new Intent(getBaseContext(), TestCalender.class);
+                    startActivity(i);
+                }
+             }
+        );
 
         TextView new_account = findViewById(R.id.no_account);
+
 
         Button login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener()
@@ -83,7 +95,7 @@ public class Login extends Create_Account {
         manager = new DBSQLiteManager(this);
 
         manager.getUsers();
-        users = manager.getContact_list();
+        users = manager.getUser_list();
 
         return users;
     }

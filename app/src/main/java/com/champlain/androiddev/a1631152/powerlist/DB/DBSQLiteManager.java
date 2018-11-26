@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.champlain.androiddev.a1631152.powerlist.Models.Date;
 import com.champlain.androiddev.a1631152.powerlist.Models.User;
 import com.champlain.androiddev.a1631152.powerlist.Models.Task;
 
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 public class DBSQLiteManager extends SQLiteOpenHelper{
     private static ArrayList<User> user_list = new ArrayList<>();
     private static ArrayList<Task> task_list = new ArrayList<>();
+    private static ArrayList<Date> date_list = new ArrayList<>();
 
     private static final int DATABASE_VERSION = 1;
 
@@ -81,18 +84,101 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
         db.close();
     }
 
+    public boolean intToBool(int a)
+    {
+       if(a == 0)
+       {
+           return false;
+       }
+       else
+       {
+           return true;
+       }
 
-    public ArrayList<User> getContact_list()
+    }
+    public void getTasks()
+    {
+        String selectQuery = "SELECT * FROM " + Task.TABLE_NAME + " ORDER BY " +
+                Task.COLUMN_UID + " DESC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Task t = new Task();
+                t.setUser_id(cursor.getInt(cursor.getColumnIndex(Task.COLUMN_UID)));
+                t.setData_id(cursor.getInt(cursor.getColumnIndex(Task.COLUMN_DID)));
+                t.setTask1(intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK1)))));
+                t.setDescription1(cursor.getString(cursor.getColumnIndex(Task.COLUMN_DESCRIPTION1)));
+                t.setTask2(intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK2)))));
+                t.setDescription2(cursor.getString(cursor.getColumnIndex(Task.COLUMN_DESCRIPTION2)));
+                t.setTask3(intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK3)))));
+                t.setDescription3(cursor.getString(cursor.getColumnIndex(Task.COLUMN_DESCRIPTION3)));
+                t.setTask4(intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK4)))));
+                t.setDescription4(cursor.getString(cursor.getColumnIndex(Task.COLUMN_DESCRIPTION4)));
+                t.setTask5(intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK5)))));
+                t.setDescription5(cursor.getString(cursor.getColumnIndex(Task.COLUMN_DESCRIPTION5)));
+                task_list.add(t);
+            }while (cursor.moveToNext());
+        }
+        db.close();
+    }
+
+    public void getDates()
+    {
+        String selectQuery = "SELECT * FROM " + Task.TABLE_NAME + " ORDER BY " +
+                Task.COLUMN_UID + " DESC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Date d = new Date();
+
+                d.setUserId(cursor.getInt(cursor.getColumnIndex(Task.COLUMN_UID)));
+                d.setDate(cursor.getInt(cursor.getColumnIndex(Task.COLUMN_DID)));
+
+                boolean b1 = (intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK1)))));
+                boolean b2 = (intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK2)))));
+                boolean b3 = (intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK3)))));
+                boolean b4 = (intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK4)))));
+                boolean b5 = (intToBool((cursor.getInt(cursor.getColumnIndex(Task.COLUMN_TASK5)))));
+
+                if(b1 && b2 && b3 && b4 && b5)
+                {
+                    d.setCompleted(true);
+                }
+                else
+                {
+                    d.setCompleted(false);
+                }
+
+                date_list.add(d);
+            }while (cursor.moveToNext());
+        }
+        db.close();
+    }
+
+    public ArrayList<User> getUser_list()
     {
         // return contact list
         return user_list;
     }
 
+    public ArrayList<Date> getDate_list()
+    {
+        // return contact list
+        return date_list;
+    }
+
+    public ArrayList<Task> getTask_list()
+    {
+        // return contact list
+        return task_list;
+    }
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-       String a = Task.CREATE_TABLE;
-
         db.execSQL(Task.CREATE_TABLE);
         db.execSQL(User.CREATE_TABLE);
     }
