@@ -32,9 +32,14 @@ public class Create_Account extends AppCompatActivity {
                 EditText name = findViewById(R.id.name);
                 EditText email = findViewById(R.id.username);
                 EditText password = findViewById(R.id.password);
-                EditText pass_confirm = findViewById(R.id.password);
+                EditText pass_confirm = findViewById(R.id.pass_confirm);
 
-                if(password.getText().toString().equals(pass_confirm.getText().toString()))
+                String name1=name.getText().toString();
+                String email1=email.getText().toString();
+                String password1=password.getText().toString();
+                String pass_confirm1 = pass_confirm.getText().toString();
+
+                if(password1.equals(pass_confirm1) && !name1.isEmpty() && !email1.isEmpty())
                 {
                     User u = new User(1, email.getText().toString(), password.getText().toString(), name.getText().toString());
                     addUser(u);
@@ -43,7 +48,7 @@ public class Create_Account extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Passwords don't match!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Passwords don't match!, Enter Name/Email", Toast.LENGTH_SHORT);
                     toast.show();
                 }
 
