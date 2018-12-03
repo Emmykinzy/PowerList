@@ -1,5 +1,6 @@
 package com.champlain.androiddev.a1631152.powerlist;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.widget.Toast;
 import com.champlain.androiddev.a1631152.powerlist.Models.User;
 
 import com.champlain.androiddev.a1631152.powerlist.DB.DBSQLiteManager;
+
+import java.util.ArrayList;
+
 public class Create_Account extends AppCompatActivity {
 
     @Override
@@ -29,25 +33,45 @@ public class Create_Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                ArrayList<User> users = refresh();
                 EditText name = findViewById(R.id.name);
                 EditText email = findViewById(R.id.username);
                 EditText password = findViewById(R.id.password);
-                EditText pass_confirm = findViewById(R.id.password);
+                EditText pass_confirm = findViewById(R.id.pass_confirm);
 
-                if(password.getText().toString().equals(pass_confirm.getText().toString()))
+                String name1 = name.getText().toString();
+                String email1 = email.getText().toString();
+                String password1 = password.getText().toString();
+                String pass_confirm1 = pass_confirm.getText().toString();
+
+                if(password1.equals(pass_confirm1) && !name1.isEmpty() && !email1.isEmpty())
                 {
-                    User u = new User(1, email.getText().toString(), password.getText().toString(), name.getText().toString());
-                    addUser(u);
-                    finish();
-
+                    boolean realUser = false;
+                    for(int x = 0; x<users.size(); x++)
+                    {
+                        User u = users.get(x);
+                        if(u.getEmail().equals(email1))
+                        {
+                            realUser = true;
+                        }
+                    }
+                    if(!realUser)
+                    {
+                        User u = new User(1, email.getText().toString(), password.getText().toString(), name.getText().toString());
+                        addUser(u);
+                        finish();
+                    }
+                    else
+                    {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Email already in use", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 }
                 else
                 {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Passwords don't match!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Passwords don't match!", Toast.LENGTH_LONG);
                     toast.show();
                 }
-
-
 
 
             }
@@ -66,5 +90,17 @@ public class Create_Account extends AppCompatActivity {
         toast.show();
 
         return createdUser;
+    }
+
+    public ArrayList<User> refresh()
+    {
+        ArrayList<User> users;
+        DBSQLiteManager manager;
+        manager = new DBSQLiteManager(this);
+
+        manager.getUsers();
+        users = manager.getUser_list();
+
+        return users;
     }
 }

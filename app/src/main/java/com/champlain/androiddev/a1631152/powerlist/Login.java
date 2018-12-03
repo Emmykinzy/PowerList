@@ -2,6 +2,9 @@ package com.champlain.androiddev.a1631152.powerlist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,18 +23,8 @@ public class Login extends Create_Account {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button test = findViewById(R.id.log_facebook);
+        Button face = findViewById(R.id.log_facebook);
 
-        test.setOnClickListener(new View.OnClickListener()
-          {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent i = new Intent(getBaseContext(), TestCalender.class);
-                    startActivity(i);
-                }
-             }
-        );
 
         TextView new_account = findViewById(R.id.no_account);
 
@@ -99,4 +92,5 @@ public class Login extends Create_Account {
 
         return users;
     }
+
 }

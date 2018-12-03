@@ -1,13 +1,13 @@
 package com.champlain.androiddev.a1631152.powerlist.Models;
 
-public class Date {
+public class Dates {
 
     private int date;
     private int userId;
     private boolean completed;
-    public Date() {}
+    public Dates() {}
 
-    public Date(int date, int userId, boolean completed)
+    public Dates(int date, int userId, boolean completed)
     {
         this.date = date;
         this.userId = userId;

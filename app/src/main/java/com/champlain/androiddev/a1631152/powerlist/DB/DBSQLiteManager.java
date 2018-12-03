@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.champlain.androiddev.a1631152.powerlist.Models.Date;
+import com.champlain.androiddev.a1631152.powerlist.Models.Dates;
 import com.champlain.androiddev.a1631152.powerlist.Models.User;
 import com.champlain.androiddev.a1631152.powerlist.Models.Task;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class DBSQLiteManager extends SQLiteOpenHelper{
     private static ArrayList<User> user_list = new ArrayList<>();
     private static ArrayList<Task> task_list = new ArrayList<>();
-    private static ArrayList<Date> date_list = new ArrayList<>();
+    private static ArrayList<Dates> dates_list = new ArrayList<>();
 
     private static final int DATABASE_VERSION = 1;
 
@@ -133,7 +133,7 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
 
         if(cursor.moveToFirst()) {
             do {
-                Date d = new Date();
+                Dates d = new Dates();
 
                 d.setUserId(cursor.getInt(cursor.getColumnIndex(Task.COLUMN_UID)));
                 d.setDate(cursor.getInt(cursor.getColumnIndex(Task.COLUMN_DID)));
@@ -153,7 +153,7 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
                     d.setCompleted(false);
                 }
 
-                date_list.add(d);
+                dates_list.add(d);
             }while (cursor.moveToNext());
         }
         db.close();
@@ -165,10 +165,10 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
         return user_list;
     }
 
-    public ArrayList<Date> getDate_list()
+    public ArrayList<Dates> getDate_list()
     {
         // return contact list
-        return date_list;
+        return dates_list;
     }
 
     public ArrayList<Task> getTask_list()
