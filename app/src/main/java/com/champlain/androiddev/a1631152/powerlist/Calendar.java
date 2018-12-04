@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.champlain.androiddev.a1631152.powerlist.DB.DBSQLiteManager;
 import com.champlain.androiddev.a1631152.powerlist.Models.Dates;
+import com.champlain.androiddev.a1631152.powerlist.Models.Task;
+import com.champlain.androiddev.a1631152.powerlist.Models.User;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
@@ -30,32 +32,71 @@ public class Calendar extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle(null);
         final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
-        // Set first day of week to Monday, defaults to Monday so calling setFirstDayOfWeek is not necessary
-        // Use constants provided by Java Calendar class
+
         compactCalendar.setFirstDayOfWeek(1);
         compactCalendar.setUseThreeLetterAbbreviation(true);
 
         instantiate();
 
-        // define a listener to receive callbacks when certain events happen.
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(java.util.Date dateClicked) {
-                ArrayList<Dates> dates = refresh();
-
+                ArrayList<Dates> dates = refreshD();
+                ArrayList<Task> tasks = refreshT(UserId);
                 for(int x = 0; x< dates.size(); x++)
                 {
                     Dates d = dates.get(x);
 
-                    Date myDate = getLongDate(d);
-                    if(d.getUserId() == UserId && myDate == getLongDate(d))
+                    Date myDate = getLongDate(d.getDate());
+                    if(d.getUserId() == UserId && myDate.equals(dateClicked) )
                     {
-                        Toast toast = Toast.makeText(getApplicationContext(), "There are Tasks here!", Toast.LENGTH_SHORT);
+
+                        if(d.isCompleted())
+                        {
+                            compactCalendar.setCurrentSelectedDayBackgroundColor(Color.GREEN);
+                        }
+                        else
+                        {
+                            compactCalendar.setCurrentSelectedDayBackgroundColor(Color.RED);
+                        }
+
+                        for(int k = 0; x< tasks.size(); x++)
+                        {
+                            Task t = tasks.get(k);
+
+                           if(dateClicked.equals(getLongDate(t.getData_id())))
+                           {
+                               Intent et = new Intent(getBaseContext(), addTask.class);
+                               et.putExtra("uId", t.getUser_id());
+
+                               et.putExtra("dId", t.getData_id());
+
+                               et.putExtra("ch1", t.getTask1()+"");
+                               et.putExtra("ch2", t.getTask2()+"");
+                               et.putExtra("ch3", t.getTask3()+"");
+                               et.putExtra("ch4", t.getTask4()+"");
+                               et.putExtra("ch5", t.getTask5()+"");
+
+                               et.putExtra("d1", t.getDescription1()+"");
+                               et.putExtra("d2", t.getDescription2()+"");
+                               et.putExtra("d3", t.getDescription3()+"");
+                               et.putExtra("d4", t.getDescription4()+"");
+                               et.putExtra("d5", t.getDescription5()+"");
+
+                               startActivity(et);
+                              
+                           }
+                        }
+
+                    }
+                    else
+                    {
+                        compactCalendar.setCurrentSelectedDayBackgroundColor(Color.rgb(66,134, 244));
+                        Toast toast = Toast.makeText(getApplicationContext(), ""+dateClicked, Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
-                Toast toast = Toast.makeText(getApplicationContext(), ""+dateClicked, Toast.LENGTH_SHORT);
-                toast.show();
+
 
             }
 
@@ -97,11 +138,12 @@ public class Calendar extends AppCompatActivity {
         String td = day.format(currDate);
         int today = Integer.parseInt(td.toString());
         final int UserId = getIntent().getIntExtra("user_id", 0);
-        ArrayList<Dates> dates = refresh();
+        ArrayList<Dates> dates = refreshD();
+        ArrayList<Task> task = refreshT(UserId);
         for(int x = 0; x< dates.size(); x++)
         {
             Dates d = dates.get(x);
-            Date myDates = getLongDate(d);
+            Date myDates = getLongDate(d.getDate());
             if(d.getUserId() == UserId)
             {
                 CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
@@ -109,14 +151,15 @@ public class Calendar extends AppCompatActivity {
                 {
                     if(d.isCompleted())
                     {
-                       compactCalendar.setCurrentDayBackgroundColor(2);
+                       compactCalendar.setCurrentSelectedDayBackgroundColor(Color.GREEN);
+                       compactCalendar.setCurrentDayBackgroundColor(Color.GREEN);
                     }
                     else
                     {
-                        compactCalendar.setCurrentDayBackgroundColor(1);
+                        compactCalendar.setCurrentSelectedDayBackgroundColor(Color.RED);
+                        compactCalendar.setCurrentDayBackgroundColor(Color.RED);
                     }
                 }
-
 
                 long millis = myDates.getTime();
 
@@ -134,7 +177,7 @@ public class Calendar extends AppCompatActivity {
             }
         }
     }
-    public ArrayList<Dates> refresh()
+    public ArrayList<Dates> refreshD()
     {
         ArrayList<Dates> dates;
         DBSQLiteManager manager;
@@ -146,9 +189,21 @@ public class Calendar extends AppCompatActivity {
         return dates;
     }
 
-    public Date getLongDate(Dates dates)
+    public ArrayList<Task> refreshT(int userId)
     {
-        String myDate = Integer.toString(dates.getDate());
+        ArrayList<Task> tasks;
+        DBSQLiteManager manager;
+        manager = new DBSQLiteManager(this);
+
+        manager.getTasksWithId(userId);
+        tasks = manager.getTask_list();
+
+        return tasks;
+    }
+
+    public Date getLongDate(int dates)
+    {
+        String myDate = Integer.toString(dates);
         char[] carr = myDate.toCharArray();
 
         char y = carr[0];
@@ -176,7 +231,7 @@ public class Calendar extends AppCompatActivity {
         myDate = myDate+" 0:00:00";
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        java.util.Date date1 = null;
+        Date date1 = null;
         try {
             date1 = sdf.parse(myDate);
         } catch (ParseException j) {
@@ -184,6 +239,7 @@ public class Calendar extends AppCompatActivity {
         }
         return date1;
     }
+
 
 
 }

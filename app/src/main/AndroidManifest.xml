@@ -19,7 +19,8 @@
         <activity android:name=".Create_Account" />
         <activity android:name=".Calendar" />
         <activity android:name=".addTask" />
-        <activity android:name=".TestCalender"></activity>
+        <activity android:name=".TestCalender" />
+        <activity android:name=".ViewTask"></activity>
     </application>
 
 </manifest>
