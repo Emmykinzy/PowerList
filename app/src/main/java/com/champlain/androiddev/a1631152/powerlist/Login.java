@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.champlain.androiddev.a1631152.powerlist.DB.DBSQLiteManager;
+import com.champlain.androiddev.a1631152.powerlist.Models.Task;
 import com.champlain.androiddev.a1631152.powerlist.Models.User;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class Login extends Create_Account {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button face = findViewById(R.id.log_facebook);
+
+        getUser();
 
 
         TextView new_account = findViewById(R.id.no_account);
@@ -42,11 +45,11 @@ public class Login extends Create_Account {
                 String userText = user.getText().toString();
                 String passText = pass.getText().toString();
 
-                final ArrayList<User> users = refresh();
+                final ArrayList<User> us = refresh();
                 boolean realUser = false;
-               for(int x = 0; x<users.size(); x++)
+               for(int x = 0; x<us.size(); x++)
                {
-                   User u = users.get(x);
+                   User u = us.get(x);
                    if(u.getPassword().equals(passText) && u.getEmail().equals(userText))
                    {
                        Intent i = new Intent(getBaseContext(), Calendar.class);
@@ -83,14 +86,20 @@ public class Login extends Create_Account {
 
     public ArrayList<User> refresh()
     {
-        ArrayList<User> users;
+        final ArrayList<User> u;
+        DBSQLiteManager manager;
+        manager = new DBSQLiteManager(this);
+        u = manager.updateUserList();
+
+        return u;
+    }
+
+    public void getUser()
+    {
         DBSQLiteManager manager;
         manager = new DBSQLiteManager(this);
 
         manager.getUsers();
-        users = manager.getUser_list();
-
-        return users;
     }
 
 }

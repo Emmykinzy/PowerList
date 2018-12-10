@@ -3,6 +3,7 @@ package com.champlain.androiddev.a1631152.powerlist.Models;
 public class Task {
 
     public static final String TABLE_NAME = "tasks";
+    public static final String COLUMN_TASKID = "task_id";
     public static final String COLUMN_UID = "user_id";
     public static final String COLUMN_DID = "date_id";
     public static final String COLUMN_TASK1 = "task1";
@@ -15,10 +16,12 @@ public class Task {
     public static final String COLUMN_DESCRIPTION4 = "description4";
     public static final String COLUMN_TASK5 = "task5";
     public static final String COLUMN_DESCRIPTION5 = "description5";
+    public static final String COLUMN_COMPLETE = "completed";
 
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-            + COLUMN_DID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_TASKID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_DID + " INT, "
             + COLUMN_UID + " INT, "
             + COLUMN_TASK1 + " BOOLEAN, "
             + COLUMN_DESCRIPTION1 + " TEXT, "
@@ -29,7 +32,8 @@ public class Task {
             + COLUMN_TASK4 + " BOOLEAN, "
             + COLUMN_DESCRIPTION4 + " TEXT, "
             + COLUMN_TASK5 + " BOOLEAN, "
-            + COLUMN_DESCRIPTION5 + " TEXT)";
+            + COLUMN_DESCRIPTION5 + " TEXT,"
+            + COLUMN_COMPLETE + " BOOLEAN)";
 
     private int user_id;
     private int data_id;
@@ -43,10 +47,11 @@ public class Task {
     private String description4;
     private Boolean task5;
     private String description5;
+    private Boolean completed;
 
     public Task() {}
 
-    public Task(int user_id, int data_id, Boolean task1, String description1, Boolean task2, String description2, Boolean task3, String description3, Boolean task4, String description4, Boolean task5, String description5)
+    public Task(int user_id, int data_id, Boolean task1, String description1, Boolean task2, String description2, Boolean task3, String description3, Boolean task4, String description4, Boolean task5, String description5, Boolean completed)
     {
         this.user_id = user_id;
         this.data_id = data_id;
@@ -60,6 +65,7 @@ public class Task {
         this.description4 = description4;
         this.task5 = task5;
         this.description5 = description5;
+        this.completed = completed;
     }
 
     public int getUser_id()
@@ -179,6 +185,16 @@ public class Task {
     public void setDescription5(String description5)
     {
         this.description5 = description5;
+    }
+
+    public Boolean getCompleted()
+    {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed)
+    {
+        this.completed = completed;
     }
 }
 
