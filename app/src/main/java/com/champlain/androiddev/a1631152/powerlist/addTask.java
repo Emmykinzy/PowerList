@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class addTask extends AppCompatActivity {
 
@@ -32,74 +33,75 @@ public class addTask extends AppCompatActivity {
         final Intent intent = getIntent();
         final int userId = intent.getIntExtra("id", 0);
 
-            Button save = findViewById(R.id.saveBtn);
-            Button back = findViewById(R.id.backBtn);
-            save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button save = findViewById(R.id.saveBtn);
+        Button back = findViewById(R.id.backBtn);
+        save.setOnClickListener(new View.OnClickListener() {
 
-              Date d = new Date();
+         @Override
+         public void onClick(View v)
+         {
 
-              SimpleDateFormat day = new SimpleDateFormat("yyyyMMdd");
+           Date d = new Date();
+           SimpleDateFormat day = new SimpleDateFormat("yyyyMMdd");
 
-              String date = day.format(d);
+           String date = day.format(d);
 
-              int DateID = Integer.parseInt(date.toString());
-
-
-              CheckBox ch1 = findViewById(R.id.Check1);
-              CheckBox ch2 = findViewById(R.id.Check2);
-              CheckBox ch3 = findViewById(R.id.Check3);
-              CheckBox ch4 = findViewById(R.id.Check4);
-              CheckBox ch5 = findViewById(R.id.Check5);
-
-              EditText d1 = findViewById(R.id.Task1);
-              EditText d2 = findViewById(R.id.Task2);
-              EditText d3 = findViewById(R.id.Task3);
-              EditText d4 = findViewById(R.id.Task4);
-              EditText d5 = findViewById(R.id.Task5);
+           int DateID = Integer.parseInt(date);
 
 
-              d1.getText().length();
-              if (d1.getText().length() < 1 || d2.getText().length() < 1 || d3.getText().length() < 1 || d4.getText().length() < 1 || d5.getText().length() < 1)
-              {
-                 Toast toast = Toast.makeText(getApplicationContext(), "Please add 5 task before saving!", Toast.LENGTH_LONG);
-                 toast.show();
-              }
-              else
-              {
-                  boolean complete = false;
-                  if(ch1.isChecked() && ch2.isChecked() && ch3.isChecked() && ch4.isChecked() && ch5.isChecked())
-                  {
-                      complete = true;
-                  }
+           CheckBox ch1 = findViewById(R.id.Check1);
+           CheckBox ch2 = findViewById(R.id.Check2);
+           CheckBox ch3 = findViewById(R.id.Check3);
+           CheckBox ch4 = findViewById(R.id.Check4);
+           CheckBox ch5 = findViewById(R.id.Check5);
 
-                 Task t = new Task(userId, DateID, ch1.isChecked(), d1.getText().toString(), ch2.isChecked(), d2.getText().toString(), ch3.isChecked(), d3.getText().toString(), ch4.isChecked(), d4.getText().toString(), ch5.isChecked(), d5.getText().toString(), complete);
-                  addTask(t);
-                  Intent i = new Intent();
-                  i.putExtra("date", DateID);
-                  i.putExtra("comp", complete+"");
-                  setResult(1, i);
-                  finish();
-              }
-              }
-            }
-            );
+           EditText d1 = findViewById(R.id.Task1);
+           EditText d2 = findViewById(R.id.Task2);
+           EditText d3 = findViewById(R.id.Task3);
+           EditText d4 = findViewById(R.id.Task4);
+           EditText d5 = findViewById(R.id.Task5);
 
-            back.setOnClickListener(new View.OnClickListener() {
+
+           d1.getText().length();
+           if (d1.getText().length() < 1 || d2.getText().length() < 1 || d3.getText().length() < 1 || d4.getText().length() < 1 || d5.getText().length() < 1)
+           {
+              Toast toast = Toast.makeText(getApplicationContext(), "Please add 5 task before saving!", Toast.LENGTH_LONG);
+              toast.show();
+           }
+           else
+           {
+               boolean complete = false;
+               if(ch1.isChecked() && ch2.isChecked() && ch3.isChecked() && ch4.isChecked() && ch5.isChecked())
+               {
+                  complete = true;
+               }
+
+               Task t = new Task(userId, DateID, ch1.isChecked(), d1.getText().toString(), ch2.isChecked(), d2.getText().toString(), ch3.isChecked(), d3.getText().toString(), ch4.isChecked(), d4.getText().toString(), ch5.isChecked(), d5.getText().toString(), complete);
+               addTasks(t);
+               Intent i = new Intent();
+               i.putExtra("date", DateID);
+               i.putExtra("comp", complete+"");
+               setResult(1, i);
+               finish();
+           }
+         }
+       });
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     finish();
                 }
             });
-        }
+    }
 
-    private Task addTask(Task t)
+    private void addTasks(Task t)
     {
         DBSQLiteManager dbslm = new DBSQLiteManager(this);
-        Task createdTask = dbslm.addTask(t);
+        dbslm.addTask(t);
 
-        return createdTask;
     }
 
 }

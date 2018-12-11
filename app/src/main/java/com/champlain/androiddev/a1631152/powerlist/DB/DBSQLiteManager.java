@@ -24,6 +24,7 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //Add a user to the Users table and user_list ArrayList
     public User addUser(User u)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -42,6 +43,7 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
         return u;
     }
 
+    //Add task to the Tasks table task_list ArrayList
     public Task addTask(Task t)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -67,6 +69,7 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
         return t;
     }
 
+    //Gets users from User table and adds them to the user_list ArrayList
     public void getUsers()
     {
         String selectQuery = "SELECT * FROM " + User.TABLE_NAME + " ORDER BY " +
@@ -87,9 +90,11 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
                 user_list.add(u);
             }while (cursor.moveToNext());
         }
+        cursor.close();
         db.close();
     }
 
+    //Change data in a user's LAST_COMPLETED, STREAK and HIGNSCORE columns
     public void updateUser(int userId, int last_completed, int streak, int highscore)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -116,18 +121,14 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
 
     }
 
-    public boolean intToBool(int a)
+    //Change String to boolean
+    private boolean intToBool(int a)
     {
-       if(a == 0)
-       {
-           return false;
-       }
-       else
-       {
-           return true;
-       }
+       return a == 0;
 
     }
+
+    //Get tasks from Task table and add them to the task_list ArrayList
     public void getTasks()
     {
         String selectQuery = "SELECT * FROM " + Task.TABLE_NAME + " ORDER BY " +
@@ -154,9 +155,11 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
                 task_list.add(t);
             }while (cursor.moveToNext());
         }
+        cursor.close();
         db.close();
     }
 
+    //Change data in a task
     public void updateTasks(int userId, int dateId, boolean c1, boolean c2, boolean c3, boolean c4, boolean c5, String d1, String d2, String d3, String d4, String d5, Boolean complete)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -200,6 +203,7 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
 
     }
 
+    //Get tasks that have the userId passed and return ArrayList
     public ArrayList<Task> getTasksWithId(int userId)
     {
         ArrayList<Task> task = new ArrayList<>();
@@ -216,6 +220,7 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
         return task;
     }
 
+    //Return an updated User ArrayList
     public ArrayList<User> updateUserList()
     {
         ArrayList<User> user = new ArrayList<>();

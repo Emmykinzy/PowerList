@@ -82,8 +82,6 @@ public class Create_Account extends AppCompatActivity {
 
     private User addUser(User c)
     {
-        //Contact createdContact = DBManager.addContact(c);
-
         DBSQLiteManager dbslm = new DBSQLiteManager(this);
         User createdUser = dbslm.addUser(c);
         Toast toast = Toast.makeText(getApplicationContext(), "New User Created", Toast.LENGTH_SHORT);
