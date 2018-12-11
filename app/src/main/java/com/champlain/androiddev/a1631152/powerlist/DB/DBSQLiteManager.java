@@ -122,9 +122,16 @@ public class DBSQLiteManager extends SQLiteOpenHelper{
     }
 
     //Change String to boolean
-    private boolean intToBool(int a)
-    {
-       return a == 0;
+    private boolean intToBool(int a) {
+
+        if(a == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
 
     }
 

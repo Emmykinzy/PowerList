@@ -213,13 +213,15 @@ public class Calendar extends AppCompatActivity {
         int today = Integer.parseInt(td);
         final int UserId = getIntent().getIntExtra("user_id", 0);
         ArrayList<Task> tasks = refreshT(UserId);
-        if(tasks != null) {
+        if(tasks.size() != 0) {
+            boolean noToday = true;
             for (int x = 0; x < tasks.size(); x++) {
                 Task t = tasks.get(x);
                 Date myDates = getLongDate(t.getData_id());
                 final CompactCalendarView compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
                 if (today == t.getData_id()) {
                     changeColor(t.getCompleted(), compactCalendar);
+                    noToday = false;
                 }
 
                 long millis = myDates.getTime();
@@ -227,6 +229,12 @@ public class Calendar extends AppCompatActivity {
                 if(!dateHasEvent(millis))
                 {
                     createEvent(t.getData_id(), t.getCompleted(), compactCalendar);
+                }
+
+                if(noToday)
+                {
+                    compactCalendar.setCurrentDayBackgroundColor(Color.rgb(86,168,255));
+                    compactCalendar.setCurrentSelectedDayBackgroundColor(Color.rgb(86,168,255));
                 }
 
             }
